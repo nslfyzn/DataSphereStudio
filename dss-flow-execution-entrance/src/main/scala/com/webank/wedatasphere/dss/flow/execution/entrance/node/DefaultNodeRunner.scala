@@ -49,6 +49,8 @@ class DefaultNodeRunner extends NodeRunner with Logging {
 
   private var startTime: Long = _
 
+  private var nowTime:Long = _
+
   private var lastGetStatusTime: Long = 0
 
   override def getNode: SchedulerNode = this.node
@@ -101,7 +103,7 @@ class DefaultNodeRunner extends NodeRunner with Logging {
   override def run(): Unit = {
     info(s"start to run node of ${node.getName}")
     try {
-      val jobProps = node.getDWSNode.getParams.remove(FlowExecutionEntranceConfiguration.PROPS_MAP) match {
+      val jobProps = node.getDssNode.getParams.remove(FlowExecutionEntranceConfiguration.PROPS_MAP) match {
         case propsMap: util.Map[String, String] => propsMap
         case _ => new util.HashMap[String, String]()
       }
@@ -156,4 +158,7 @@ class DefaultNodeRunner extends NodeRunner with Logging {
 
   override def setStartTime(startTime: Long): Unit = this.startTime = startTime
 
+  override def getNowTime(): Long = this.nowTime
+
+  override def setNowTime(nowTime: Long): Unit = this.nowTime = nowTime
 }
